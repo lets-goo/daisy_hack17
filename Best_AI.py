@@ -105,22 +105,22 @@ def isSmallBoardWon(small_board_data):
 	if(we == '1'): op = '2';
 	else: op ='1';
 	
-	if compareSquares(0,1,2,we): return TRUE
-	if compareSquares(0,1,2,op): return FALSE
-	if compareSquares(3,4,5,we): return TRUE
-	if compareSquares(3,4,5,op): return FALSE
-	if compareSquares(6,7,8,we): return TRUE
-	if compareSquares(6,7,8,op): return FALSE
-	if compareSquares(0,3,6,we): return TURE
-	if compareSquares(0,3,6,op): return FALSE
-	if compareSquares(1,4,7,we): return TRUE
-	if compareSquares(1,4,7,op): return FALSE
-	if compareSquares(2,5,8,we): return TRUE
-	if compareSquares(2,5,8,op): return FALSE
-	if compareSquares(0,4,8,we): return TRUE
-	if compareSquares(0,4,8,op): return FALSE
-	if compareSquares(2,4,6,we): return TRUE
-	if compareSquares(2,4,6,op): return FALSE
+	if compareSquares(0,1,2,we): return True
+	if compareSquares(0,1,2,op): return False
+	if compareSquares(3,4,5,we): return True
+	if compareSquares(3,4,5,op): return False
+	if compareSquares(6,7,8,we): return True
+	if compareSquares(6,7,8,op): return False
+	if compareSquares(0,3,6,we): return True
+	if compareSquares(0,3,6,op): return False
+	if compareSquares(1,4,7,we): return True
+	if compareSquares(1,4,7,op): return False
+	if compareSquares(2,5,8,we): return True
+	if compareSquares(2,5,8,op): return False
+	if compareSquares(0,4,8,we): return True
+	if compareSquares(0,4,8,op): return False
+	if compareSquares(2,4,6,we): return True
+	if compareSquares(2,4,6,op): return False
 	return 0
 
 def miniMAX(node, maximizingPlayer):
@@ -131,7 +131,7 @@ def miniMAX(node, maximizingPlayer):
 	if maximizingPlayer:
 		bestValue = -10000
 		for each child in node.children:
-			v = miniMax(child, FALSE)
+			v = miniMax(child, False)
 			node.score = v
 			bestValue = max(bestValue, v)
 		return bestValue
@@ -139,7 +139,7 @@ def miniMAX(node, maximizingPlayer):
 	else:
 		bestValue = 10000
 		for each child in node.children:
-			v = miniMax(child, TRUE)
+			v = miniMax(child, True)
 			node.score = v
 			bestValue = min(bestValue, v)
 		return bestValue
