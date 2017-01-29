@@ -55,6 +55,31 @@ def isSmallBoardWon(small_board_data):
 	# Return TRUE if we won
 	# Return FALSE if opponent won
 	# Return 0 if no on wins
+	def compareSquares(s1, s2, s3, v):
+		if data[small_board_data*9 +s1]==data[small_board_data*9 +s2] and data[small_board_data*9 +s1]==data[small_board_data*9 +s3] and data[small_board_data*9 +s1]==v:
+			return True
+		else:
+			return False
+	we = data[0];
+	if(we == '1'): op = '2';
+	else: op ='1';
+	
+	if compareSquares(0,1,2,we): return TRUE
+	if compareSquares(0,1,2,op): return FALSE
+	if compareSquares(3,4,5,we): return TRUE
+	if compareSquares(3,4,5,op): return FALSE
+	if compareSquares(6,7,8,we): return TRUE
+	if compareSquares(6,7,8,op): return FALSE
+	if compareSquares(0,3,6,we): return TURE
+	if compareSquares(0,3,6,op): return FALSE
+	if compareSquares(1,4,7,we): return TRUE
+	if compareSquares(1,4,7,op): return FALSE
+	if compareSquares(2,5,8,we): return TRUE
+	if compareSquares(2,5,8,op): return FALSE
+	if compareSquares(0,4,8,we): return TRUE
+	if compareSquares(0,4,8,op): return FALSE
+	if compareSquares(2,4,6,we): return TRUE
+	if compareSquares(2,4,6,op): return FALSE
 	return 0
 
 def isLeaf(node):
