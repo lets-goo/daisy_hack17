@@ -143,18 +143,24 @@ def isBoardWon(squares):
 	if compareSquares(squares,2,4,6,2): return 2
 	return 0
 	
-def isSmallBoardWon(small_board_data):
-	# Return TRUE if we won
-	# Return FALSE if opponent won
-	# Return 0 if no on wins
+def isBigBoardWon(board_data):
+	for board_index in range(9):
+		data = ''
+		cur = isSmallBoardWon(board_data[2:], board_index)
+		if(cur):
+			data += board_data(0)
+		else if(not cur):
+			data += '3'
+		else:
+			data += '0'
+
 	def compareSquares(s1, s2, s3, v):
-		if data[small_board_data*9 +s1]==data[small_board_data*9 +s2] and data[small_board_data*9 +s1]==data[small_board_data*9 +s3] and data[small_board_data*9 +s1]==v:
+		if data[s1]==data[s2] and data[s1]==data[s3] and data[s1]==v:
 			return True
 		else:
 			return False
-	we = data[0];
-	if(we == '1'): op = '2';
-	else: op ='1';
+	we = board_data[0];
+	op = '3'
 	
 	if compareSquares(0,1,2,we): return True
 	if compareSquares(0,1,2,op): return False
@@ -173,6 +179,8 @@ def isSmallBoardWon(small_board_data):
 	if compareSquares(2,4,6,we): return True
 	if compareSquares(2,4,6,op): return False
 	return 0
+	
+
 
 def miniMAX(node, maximizingPlayer):
 	# Return an integer
@@ -308,7 +316,7 @@ def free_move(board_data, we):
 	for i in range(81):
 		if(board_data(i+2) == 0): # checkinh if the square is occupied or not
 			tmp_board_data = board_data[:i+2] +we +board_data[i+3:] 
-			vm[str(i)] = get_score(tmp_board_data)
+			vm[str(i)] = score(tmp_board_data[2:], int(tmp_board_data[0]))
 	return vm
 
 def board_modification(data, move, mover):
