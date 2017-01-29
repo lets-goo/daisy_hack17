@@ -315,7 +315,7 @@ def free_move(board_data, we):
 	# 'board_data' is a string of length of 83
 	vm = {}
 	for i in range(81):
-		if(board_data(i+2) == 0): # checkinh if the square is occupied or not
+		if(board_data[i+2] == 0): # checkinh if the square is occupied or not
 			tmp_board_data = board_data[:i+2] +we +board_data[i+3:] 
 			vm[str(i)] = score(tmp_board_data[2:], int(tmp_board_data[0]))
 	return vm
