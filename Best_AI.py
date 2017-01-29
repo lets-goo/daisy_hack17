@@ -66,43 +66,56 @@ def findValidMoves(squares,nextsquare):
 						vm.append(i)
 	return vm
 
-def isBigBoardWon(board_data):
-	for board_index in range(9):
-		data = ''
-		cur = isSmallBoardWon(board_index, board_data)
-		if(cur):
-			data += board_data(0)
-		else if(not cur):
-			data += '3'
-		else:
-			data += '0'
+def isSmallBoardWon(state,small_board_data):
+	# Return 1 if 1 won
+	# Return 2 if 2 won
+	# Return 0 if no on wins
 
 	def compareSquares(s1, s2, s3, v):
-		if data[s1]==data[s2] and data[s1]==data[s3] and data[s1]==v:
-			return True
-		else:
-			return False
-	we = board_data[0];
-	op = '3'
-	
-	if compareSquares(0,1,2,we): return True
-	if compareSquares(0,1,2,op): return False
-	if compareSquares(3,4,5,we): return True
-	if compareSquares(3,4,5,op): return False
-	if compareSquares(6,7,8,we): return True
-	if compareSquares(6,7,8,op): return False
-	if compareSquares(0,3,6,we): return True
-	if compareSquares(0,3,6,op): return False
-	if compareSquares(1,4,7,we): return True
-	if compareSquares(1,4,7,op): return False
-	if compareSquares(2,5,8,we): return True
-	if compareSquares(2,5,8,op): return False
-	if compareSquares(0,4,8,we): return True
-	if compareSquares(0,4,8,op): return False
-	if compareSquares(2,4,6,we): return True
-	if compareSquares(2,4,6,op): return False
-	return 0
 
+		if state[small_board_data*9 +s1]==state[small_board_data*9 +s2] and state[small_board_data*9 +s1]==state[small_board_data*9 +s3] and int(state[small_board_data*9 +s1])==v:
+
+			return True
+
+		else:
+
+			return False
+
+	
+
+	if compareSquares(0,1,2,1): return 1
+
+	if compareSquares(0,1,2,2): return 2
+
+	if compareSquares(3,4,5,1): return 1
+
+	if compareSquares(3,4,5,2): return 2
+
+	if compareSquares(6,7,8,1): return 1
+
+	if compareSquares(6,7,8,2): return 2
+
+	if compareSquares(0,3,6,1): return 1
+
+	if compareSquares(0,3,6,2): return 2
+
+	if compareSquares(1,4,7,1): return 1
+
+	if compareSquares(1,4,7,2): return 2
+
+	if compareSquares(2,5,8,1): return 1
+
+	if compareSquares(2,5,8,2): return 2
+
+	if compareSquares(0,4,8,1): return 1
+
+	if compareSquares(0,4,8,2): return 2
+
+	if compareSquares(2,4,6,1): return 1
+
+	if compareSquares(2,4,6,2): return 2
+
+	return 0
 
 def isBoardWon(squares):
 	#Input: squares = 8 item list of squares 
