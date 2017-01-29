@@ -407,7 +407,7 @@ def get_move(timeout,data):
 	
 	#free move or first move
 	if (nextsquare == "9" or data[2:83] == "0"*81):
-		all_scores = free_move(data[2:83], PLAYER)
+		all_scores = free_move(data[2:83], str(PLAYER))
 		#get the move with highest score
 		move = sorted(all_scores.items(), key=lambda all_scores: all_scores[1], reverse=True)[0]
 		
