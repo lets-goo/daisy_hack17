@@ -1,5 +1,4 @@
-from random import choice
-#
+
 class square:
 	def __init__(self,ID,val):
 		self.ID = ID
@@ -208,38 +207,38 @@ def miniMAX(node, maximizingPlayer, we):
 def convert_big_board_to_list(state):
     list = []
     for i in range(0,9):
-        list.append([])
+            list.append([])
     for i in range(0,81):
-        board = int(i/9)
-        #pos = i%9
-        list[board].append(int(state[i])) 
+            board = int(i/9)
+            #pos = i%9
+            list[board].append(int(state[i])) 
     return list
 
 def check_adj_hori(tuple, list_neutral_board):
     a, b = tuple
     if (a%3==0):    #e.g a=3 
-        return (b==a+1 and a+2 in list_neutral_board) or (b == a+2 and a+1 in list_neutral_board)   #e.g.b=4 and 5 is neutral
+            return (b==a+1 and a+2 in list_neutral_board) or (b == a+2 and a+1 in list_neutral_board)   #e.g.b=4 and 5 is neutral
                                                                                                     #or b=5 and 4 is neutral
     elif (a%3==1):   #a in col1
-        return (b==a+1) and (a-1 in list_neutral_board)
+            return (b==a+1) and (a-1 in list_neutral_board)
     return False
         
 def check_adj_vert(tuple, list_neutral_board):
     a, b = tuple
     if a in range(0,3): #a in row0
-        return (b==a+3 and a+6 in list_neutral_board) or (b==a+6 and a+3 in list_neutral_board)
+            return (b==a+3 and a+6 in list_neutral_board) or (b==a+6 and a+3 in list_neutral_board)
     elif a in range(3,6):    #a in row1
-        return (b==a+3) and (a-3 in list_neutral_board)
+            return (b==a+3) and (a-3 in list_neutral_board)
     return False
 
 def check_adj_diag(tuple, list_neutral_board):
     a, b = tuple
     if a==0:
-        return (b==4 and 8 in list_neutral_board) or (b==8 and 4 in list_neutral_board)
+            return (b==4 and 8 in list_neutral_board) or (b==8 and 4 in list_neutral_board)
     elif a==2:
-        return (b==4 and 6 in list_neutral_board) or (b==6 and 4 in list_neutral_board)
+            return (b==4 and 6 in list_neutral_board) or (b==6 and 4 in list_neutral_board)
     elif a==4:
-        return (b==6 and 2 in list_neutral_board) or (b==8 and 1 in list_neutral_board)
+            return (b==6 and 2 in list_neutral_board) or (b==8 and 1 in list_neutral_board)
     return False
         
             
@@ -250,22 +249,22 @@ def find_num_adj_win(list_win, list_neutral_board):
     list_win_tuple = convert_list_win_board_to_list_tuple(list_win)
     for tuple in list_win_tuple:
         
-        if check_adj_hori(tuple, list_neutral_board):
-            num += 1
-            continue
-        elif check_adj_vert(tuple, list_neutral_board):
-            num += 1
-            continue
-        elif check_adj_diag(tuple, list_neutral_board):
-            num += 1
+            if check_adj_hori(tuple, list_neutral_board):
+                    num += 1
+                    continue
+            elif check_adj_vert(tuple, list_neutral_board):
+                    num += 1
+                    continue
+            elif check_adj_diag(tuple, list_neutral_board):
+                    num += 1
     return num
         
 def convert_list_win_board_to_list_tuple(list):
     list_tuple = []
     length_list = len(list)
     for i in range(length_list):
-        for j in range(i+1, length_list):
-            list_tuple.append((list[i],list[j]))
+            for j in range(i+1, length_list):
+                    list_tuple.append((list[i],list[j]))
     return list_tuple
 
 def utility(we, state):     #we is either 1(X) or 2(O), state is the 81 characters string
@@ -274,41 +273,41 @@ def utility(we, state):     #we is either 1(X) or 2(O), state is the 81 characte
     list_neutral_board = []     #list of neutral small board
     score = 0
     for coord_big in range(9):
-        player = isSmallBoardWon(state, coord_big)  #player = who won the small board at coord_big(which small table)
-        if player == we: 
-            score += 5
-            if (coord_big in [0, 2, 3, 5, 6, 8]):   #won corner board
-                score += 3
-            if (coord_big == 4): #won center board
-                score += 10
-            list_win_small_board.append(coord_big)
-        elif player == 0:
-            list_neutral_board.append(coord_big)
+            player = isSmallBoardWon(state, coord_big)  #player = who won the small board at coord_big(which small table)
+            if player == we: 
+                    score += 5
+                    if (coord_big in [0, 2, 3, 5, 6, 8]):   #won corner board
+                            score += 3
+                    if (coord_big == 4): #won center board
+                           score += 10
+                    list_win_small_board.append(coord_big)
+            elif player == 0:
+                    list_neutral_board.append(coord_big)
     score += find_num_adj_win(list_win_small_board, list_neutral_board)*4
     
     
     list_win_square = []    #list of win square within a small board
     list_neutral_square = []    #list of neutral square within a small board
     for i in list_neutral_board:  #i is board index i.e coord_big
-        for j in range(9):  #j is index within board i.e small_coord
-            if list[i][j] == we:
-                if i == 4:  #any square in center
-                    score += 3
-                if j == 4:  #center square in any small board
-                    score += 3
-                list_win_square.append(j)
-            elif list[i][j] == 0:   
-                list_neutral_square.append(j)
-        score += find_num_adj_win(list_win_square, list_neutral_square)*2
+            for j in range(9):  #j is index within board i.e small_coord
+                    if list[i][j] == we:
+                            if i == 4:  #any square in center
+                                    score += 3
+                            if j == 4:  #center square in any small board
+                                    score += 3
+                            list_win_square.append(j)
+                    elif list[i][j] == 0:   
+                            list_neutral_square.append(j)
+            score += find_num_adj_win(list_win_square, list_neutral_square)*2
     return score
 
 def score(state, we):
     utility1 = utility(1, state)
     utility2 = utility(2, state)
     if we == 1: #we is X
-        return utility1 - utility2
+            return utility1 - utility2
     elif we == 2:
-        return utility2 - utility1
+            return utility2 - utility1
 	
 def free_move(board_data, we):
 	
@@ -341,6 +340,7 @@ def getBigBoard(squares,bigSq):
 	return sq
 
 
+    
 def initialize_tree(root, move, board_data, depth, depth_counter, mover, player):
 	
 	
@@ -355,12 +355,18 @@ def initialize_tree(root, move, board_data, depth, depth_counter, mover, player)
 	#if the move results a free move
 	#find all scores of the possible moves,
 	#if mover is us, get max 9
-	if (isSmallBoardWon(board_data[2+i*9:2+9*(i+1)])!=0):
-		all_possible_mv_sc = free_move(data[2:83], mover)
-		sorted_mv_sc = sorted(all_scores.items(), key=lambda all_scores: all_scores[1], reverse=(mover==player))[0:9]
+	if (isSmallBoardWon(board_data, int(move))!=0):
+		all_possible_mv_sc = free_move(player+move+board_data, mover)
 		
-		for i in range(9):
-			new_board = board_modification(board_data, sorted_mv_sc[i], mover)
+		if (len(all_possible_mv_sc) < 9):
+                        length =len(all_possible_mv_sc)
+                else:
+                        length = 9
+                    
+		sorted_mv_sc = sorted(all_possible_mv_sc.items(), key=lambda all_possible_mv_sc: all_possible_mv_sc[1], reverse=(mover==player))[0:length]
+		
+		for i in range(length):
+			new_board = board_modification(board_data, int(sorted_mv_sc[i][0]), mover)
 			root.add_a_child( node(new_board, 0) )
 			
 			#expand further into its child
@@ -377,6 +383,9 @@ def initialize_tree(root, move, board_data, depth, depth_counter, mover, player)
 		for i in range(9):
 			#if valid move, insert node
 			if (board_data[int(move)*9+i] == "0"):
+				
+				
+				
 
 				#modify the board
 				new_board = board_modification(board_data, int(move)*9+i, mover)
@@ -398,8 +407,7 @@ def initialize_tree(root, move, board_data, depth, depth_counter, mover, player)
 				root.add_a_child( )
 	
 	return root
-	
-	
+
 def get_move(timeout,data):
 	#getting input
 	PLAYER=int(data[0])
