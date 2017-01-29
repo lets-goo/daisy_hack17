@@ -149,7 +149,7 @@ def isBigBoardWon(board_data):
 		cur = isSmallBoardWon(board_data[2:], board_index)
 		if(cur):
 			data += board_data(0)
-		else if(not cur):
+		elif(not cur):
 			data += '3'
 		else:
 			data += '0'
@@ -185,7 +185,8 @@ def isBigBoardWon(board_data):
 def miniMAX(node, maximizingPlayer):
 	# Return an integer
 	if node.isLeaf() or (isBigBoardWon(node.board_data) != 0):
-		return get_score(node.get_board_data())
+		a = node.get_board_data()
+		return score(a, int(a[0]))
 	
 	if maximizingPlayer:
 		bestValue = -10000
