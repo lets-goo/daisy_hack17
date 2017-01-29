@@ -66,6 +66,43 @@ def findValidMoves(squares,nextsquare):
 						vm.append(i)
 	return vm
 
+def isBigBoardWon(board_data):
+	for board_index in range(9):
+		data = ''
+		cur = isSmallBoardWon(board_index, board_data)
+		if(cur):
+			data += board_data(0)
+		else if(not cur):
+			data += '3'
+		else:
+			data += '0'
+
+	def compareSquares(s1, s2, s3, v):
+		if data[s1]==data[s2] and data[s1]==data[s3] and data[s1]==v:
+			return True
+		else:
+			return False
+	we = board_data[0];
+	op = '3'
+	
+	if compareSquares(0,1,2,we): return True
+	if compareSquares(0,1,2,op): return False
+	if compareSquares(3,4,5,we): return True
+	if compareSquares(3,4,5,op): return False
+	if compareSquares(6,7,8,we): return True
+	if compareSquares(6,7,8,op): return False
+	if compareSquares(0,3,6,we): return True
+	if compareSquares(0,3,6,op): return False
+	if compareSquares(1,4,7,we): return True
+	if compareSquares(1,4,7,op): return False
+	if compareSquares(2,5,8,we): return True
+	if compareSquares(2,5,8,op): return False
+	if compareSquares(0,4,8,we): return True
+	if compareSquares(0,4,8,op): return False
+	if compareSquares(2,4,6,we): return True
+	if compareSquares(2,4,6,op): return False
+	return 0
+
 
 def isBoardWon(squares):
 	#Input: squares = 8 item list of squares 
@@ -126,7 +163,7 @@ def isSmallBoardWon(small_board_data):
 
 def miniMAX(node, maximizingPlayer):
 	# Return an integer
-	if node.isLeaf() or (isBoardWon != 0):
+	if node.isLeaf() or (isBigBoardWon(node.board_data) != 0):
 		return get_score(node.get_board_data())
 	
 	if maximizingPlayer:
