@@ -173,6 +173,37 @@ def getBigBoard(squares,bigSq):
 	return sq
 
 
+def initialize_tree(root, move, board_data, depth, depth_counter, mover):
+	
+	#base
+	if (depth_counter == depth):
+		return None
+	
+	#expand
+	for i in range(9):
+		#if valid move, insert node
+		if (board_data[move*9+i] == 0):
+			#modify the board
+			new_board = board_modification(board_data, move*9+i, mover)
+			root.add_a_child( node(new_board, 0) )
+			
+			#expand further into its child
+			#switch player
+			if (mover == 1):
+				mover = 2
+			else:
+				mover = 1
+				
+			depth_counter += 1
+			initialize_tree(root.get_children[i], i, new_board, depth, depth_counter, mover)
+		
+		#null pointer
+		else:
+			node.add_a_child( None)
+	
+	return root
+	
+	
 def get_move(timeout,data):
 	#getting input
 	PLAYER=int(data[0])
@@ -180,11 +211,8 @@ def get_move(timeout,data):
 	
 	
 	# Tree construction
-	poss_moves = tree()
-	for i in range(5):
-		for i in range(9):
-			poss_moves.insert_node
-	
+	root = node(data[2:83], 0)
+	root = initialize_tree(root, data[1], data[2:83], 5, 0, PLAYER);
 	
 	
 	return choice(validMoves)
