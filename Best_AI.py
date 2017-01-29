@@ -46,6 +46,7 @@ def isBoardWon(squares):
 	if compareSquares(squares,2,5,8,1): return 1
 	if compareSquares(squares,2,5,8,2): return 2
 	if compareSquares(squares,0,4,8,1): return 1
+
 	if compareSquares(squares,0,4,8,2): return 2
 	if compareSquares(squares,2,4,6,1): return 1
 	if compareSquares(squares,2,4,6,2): return 2
@@ -55,6 +56,7 @@ def isSmallBoardWon(small_board_data):
 	# Return TRUE if we won
 	# Return FALSE if opponent won
 	# Return 0 if no on wins
+
 	def compareSquares(s1, s2, s3, v):
 		if data[small_board_data*9 +s1]==data[small_board_data*9 +s2] and data[small_board_data*9 +s1]==data[small_board_data*9 +s3] and data[small_board_data*9 +s1]==v:
 			return True
@@ -117,6 +119,12 @@ def get_score(board_data):
 	
 	return 
 	# return an Integer
+def board_modification(data, move, mover):
+	# take in 83-long-string current board status "data", and index of destination (0-80) as "move"
+	# "mover" is 1 if 'X' and 2 if 'O'
+	# Return a new 83-long-string board status "new-board"
+	new_board = data[0:move] +  mover + data[move+1:]
+	return new_board
 
 def isBoardFull(squares):
 	for i in range(9):
