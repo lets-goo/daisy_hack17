@@ -97,14 +97,9 @@ def isSmallBoardWon(small_board_data):
 	# Return 0 if no on wins
 	return 0
 
-def isLeaf(node):
-	# Retunr FLASE/ TRUE
-	return 
-
-
 def miniMAX(node, maximizingPlayer):
 	# Return an integer
-	if isLeaf(node) or (isBoardWon != 0):
+	if node. or (isBoardWon != 0):
 		return get_score(node.board_data)
 	
 	if maximizingPlayer:
