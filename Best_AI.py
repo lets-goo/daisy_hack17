@@ -204,7 +204,7 @@ def board_modification(data, move, mover):
 	
 def isBoardFull(squares):
 	for i in range(9):
-		if squares[i]==0:
+		if (squares[i]==0):
 			return False
 	return True
 
@@ -216,7 +216,9 @@ def getBigBoard(squares,bigSq):
 	return sq
 
 
-def initialize_tree(root, move, board_data, depth, depth_counter, mover):
+def initialize_tree(root, move, board_data, depth, depth_counter, mover, player):
+	
+	
 	
 	#base
 	if (depth_counter == depth):
@@ -225,11 +227,15 @@ def initialize_tree(root, move, board_data, depth, depth_counter, mover):
 	#expand
 	depth_counter += 1
 	
-	for i in range(9):
-		#if valid move, insert node
-		if (board_data[int(move)*9+i] == "0"):
-			#modify the board
-			new_board = board_modification(board_data, int(move)*9+i, mover)
+	#if the move results a free move
+	#find all scores of the possible moves,
+	#if mover is us, get max 9
+	if (isSmallBoardWon(board_data[2+i*9:2+9*(i+1)])!=0):
+		all_possible_mv_sc = free_move(data[2:83], mover)
+		sorted_mv_sc = sorted(all_scores.items(), key=lambda all_scores: all_scores[1], reverse=(mover==player))[0:9]
+		
+		for i in range(9):
+			new_board = board_modification(board_data, sorted_mv_sc[i], mover)
 			root.add_a_child( node(new_board, 0) )
 			
 			#expand further into its child
@@ -238,11 +244,33 @@ def initialize_tree(root, move, board_data, depth, depth_counter, mover):
 				tmp_mover = "2"
 			else:
 				tmp_mover = "1"
-			initialize_tree(root.get_children(i), str(i), new_board, depth, depth_counter, tmp_mover)
+			
+			initialize_tree(root.get_children(i), str(i), new_board, depth, depth_counter, tmp_mover, player)
 		
-		#null pointer
-		else:
-			root.add_a_child( )
+	else:
+		#normal moves
+		for i in range(9):
+			#if valid move, insert node
+			if (board_data[int(move)*9+i] == "0"):
+
+				#modify the board
+				new_board = board_modification(board_data, int(move)*9+i, mover)
+				root.add_a_child( node(new_board, 0) )
+
+				#expand further into its child
+				#switch player
+				if (mover == "1"):
+					tmp_mover = "2"
+				else:
+					tmp_mover = "1"
+
+
+
+				initialize_tree(root.get_children(i), str(i), new_board, depth, depth_counter, tmp_mover, player)
+
+			#null pointer
+			else:
+				root.add_a_child( )
 	
 	return root
 	
@@ -252,11 +280,17 @@ def get_move(timeout,data):
 	PLAYER=int(data[0])
 	nextsquare=int(data[1])
 	
-	
-	# Tree construction
-	root = node(data[2:83], 0)
-	root = initialize_tree(root, data[1], data[2:83], 5, 0, PLAYER);
-	
+	#free move or first move
+	if (nextsquare == "9" or data[2:83] == "0"*81):
+		all_scores = free_move(data[2:83], PLAYER)
+		#get the move with highest score
+		move = sorted(all_scores.items(), key=lambda all_scores: all_scores[1], reverse=True)[0]
+		
+	else:
+		# Tree construction
+		root = node(data[2:83], 0)
+		root = initialize_tree(root, data[1], data[2:83], 5, 0, PLAYER)
+
 	
 	return choice(validMoves)
 	
