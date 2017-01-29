@@ -146,7 +146,6 @@ def miniMAX(node, maximizingPlayer):
 	return bestValue
 
 
-
 def get_score(board_data):
 	score = 0
 	# board_data = string
