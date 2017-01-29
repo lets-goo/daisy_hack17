@@ -146,12 +146,55 @@ def miniMAX(node, maximizingPlayer):
 	return bestValue
 
 
+
 def get_score(board_data):
-	# move = [0:80]
+	score = 0
 	# board_data = string
+	###	
+	## giving score based on 9x9
+	for board_index in range(9):
+		stat = ''
+		cur = isSmallBoardWon(board_index)
+		if(cur): 
+			score = score +5
+			if(board_index == 4): score += 10
+			else if(board_index in [0, 2, 6, 8]): score += 3
+			#cur = "1"
+			stat.append(board_index)
+		else if(not cur):
+			# do nothing because opponent already won this board
+		else if(board_index not in [1, 3, 5, 7]):
+			# when unwon board has our mark as center
+			if(board_data[9*board_index +4] == board_data[1]): score += 3
+			
+			# when either unwon center or corner boards have our mark
+			i = True
+			c = 0
+			while(i):
+				if(board_data[9*board_index +c] == board_data[1]): 
+					i = False
+					if(board_index == 4): score += 2
+					else if(board_index in [0, 2, 6, 8]): score += 1
+				c +=1
+			
+		#stat += cur
+		# 'stat' having 9 members is array of 9x9 board
+		# True if the board is occupied by us, False if the board is occupied by opponent, and 0 if no one occupies
+		
 	
-	return 
+###
+	return score
 	# return an Integer
+	
+def free_move(board_data, we):
+	
+	# 'board_data' is a string of length of 83
+	vm = {}
+	for i in range(81):
+		if(board_data(i+2) == 0): # checkinh if the square is occupied or not
+			tmp_board_data = board_data[:i+2] +we +board_data[i+3:] 
+			vm[str(i)] = get_score(tmp_board_data)
+	return vm
 
 def board_modification(data, move, mover):
 	# take in 83-long-string current board status "data", and index of destination (0-80) as "move"
