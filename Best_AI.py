@@ -60,13 +60,33 @@ def isSmallBoardWon(small_board_data):
 def isLeaf(node):
 	# Retunr FLASE/ TRUE
 	return 
-	
+
+
 def miniMAX(node, maximizingPlayer):
 	# Return an integer
+	if isLeaf(node) or (isBoardWon != 0):
+		return get_score(node.board_data)
 	
+	if maximizingPlayer:
+		bestValue = -10000
+		for each sub_node in node.child:
+			v = miniMax(sub_child, FALSE)
+			node.score = v
+			bestValue = max(bestValue, v)
+		return bestValue
+		
+	else:
+		bestValue = 10000
+		for each sub_child in node.child:
+			v = miniMax(sub_child, TRUE)
+			node.score = v
+			bestValue = min(bestValue, v)
+		return bestValue
+		
 	return 
 
-def ger_score(move, board_data):
+
+def get_score(board_data):
 	# move = [0:80]
 	# board_data = string
 	
@@ -89,6 +109,7 @@ def getBigBoard(squares,bigSq):
 
 def get_move(timeout,data):
 	# Tree construction
+	
 	# 
 	PLAYER=int(data[0])
 	nextsquare=int(data[1])
