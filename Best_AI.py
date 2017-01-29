@@ -182,23 +182,23 @@ def isBigBoardWon(board_data):
 	
 
 
-def miniMAX(node, maximizingPlayer):
+def miniMAX(node, maximizingPlayer, we):
 	# Return an integer
+	# 'we' is interger 1 or 2
 	if node.isLeaf() or (isBigBoardWon(node.board_data) != 0):
-		a = node.get_board_data()
-		return score(a, int(a[0]))
+		return score(node.get_board_data(), we)
 	
 	if maximizingPlayer:
 		bestValue = -10000
 		for child in node.get_children():
-			v = miniMax(child, False)
+			v = miniMax(child, False, we)
 			node.set_score(v)
 			bestValue = max(bestValue, v)
 		
 	else:
 		bestValue = 10000
 		for child in node.get_children():
-			v = miniMax(child, True)
+			v = miniMax(child, True, we)
 			node.set_score(v)
 			bestValue = min(bestValue, v)
 	
