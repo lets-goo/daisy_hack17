@@ -12,7 +12,47 @@ class square:
 	def _getsmallSq(self):
 		return self.ID%9
 		
-class tree:
+class node:
+	def __init__(self, board_data, score):
+		self.board_data = board_data
+		self.score = score
+		self.children =[]
+	
+	def get_board_data(self):
+		return self.board_data
+	def get_score(self):
+		return self.score
+	def get_children(self):
+		return self.children
+	
+	def set_board_data(self, value):
+		self.board_data = value
+	def set_score(self, value):
+		self.score = value
+	def set_children(self, index, new_node):
+		if (index < len(self.children)):
+			self.children[index] = new_node
+	def add_a_child(self, new_node):
+		self.children.append(new_node)
+		
+	def isLeaf(self):
+		if (self.children == []):
+			return True
+		return False
+	
+class Tree:
+	def __init__(self):
+		root = None
+	
+	def insert_node(self, node, board_data, score):
+		if (root == None):
+			root = node(board_data, score)
+		else:
+			root.add_a_child(node(board_data, score))
+	
+	
+	
+	
 
 def findValidMoves(squares,nextsquare):
 	vm = []
@@ -46,7 +86,6 @@ def isBoardWon(squares):
 	if compareSquares(squares,2,5,8,1): return 1
 	if compareSquares(squares,2,5,8,2): return 2
 	if compareSquares(squares,0,4,8,1): return 1
-
 	if compareSquares(squares,0,4,8,2): return 2
 	if compareSquares(squares,2,4,6,1): return 1
 	if compareSquares(squares,2,4,6,2): return 2
@@ -56,32 +95,6 @@ def isSmallBoardWon(small_board_data):
 	# Return TRUE if we won
 	# Return FALSE if opponent won
 	# Return 0 if no on wins
-
-	def compareSquares(s1, s2, s3, v):
-		if data[small_board_data*9 +s1]==data[small_board_data*9 +s2] and data[small_board_data*9 +s1]==data[small_board_data*9 +s3] and data[small_board_data*9 +s1]==v:
-			return True
-		else:
-			return False
-	we = data[0];
-	if(we == '1'): op = '2';
-	else: op ='1';
-	
-	if compareSquares(0,1,2,we): return TRUE
-	if compareSquares(0,1,2,op): return FALSE
-	if compareSquares(3,4,5,we): return TRUE
-	if compareSquares(3,4,5,op): return FALSE
-	if compareSquares(6,7,8,we): return TRUE
-	if compareSquares(6,7,8,op): return FALSE
-	if compareSquares(0,3,6,we): return TURE
-	if compareSquares(0,3,6,op): return FALSE
-	if compareSquares(1,4,7,we): return TRUE
-	if compareSquares(1,4,7,op): return FALSE
-	if compareSquares(2,5,8,we): return TRUE
-	if compareSquares(2,5,8,op): return FALSE
-	if compareSquares(0,4,8,we): return TRUE
-	if compareSquares(0,4,8,op): return FALSE
-	if compareSquares(2,4,6,we): return TRUE
-	if compareSquares(2,4,6,op): return FALSE
 	return 0
 
 def isLeaf(node):
@@ -96,16 +109,16 @@ def miniMAX(node, maximizingPlayer):
 	
 	if maximizingPlayer:
 		bestValue = -10000
-		for each sub_node in node.child:
-			v = miniMax(sub_child, FALSE)
+		for each child in node.children:
+			v = miniMax(child, FALSE)
 			node.score = v
 			bestValue = max(bestValue, v)
 		return bestValue
 		
 	else:
 		bestValue = 10000
-		for each sub_child in node.child:
-			v = miniMax(sub_child, TRUE)
+		for each child in node.children:
+			v = miniMax(child, TRUE)
 			node.score = v
 			bestValue = min(bestValue, v)
 		return bestValue
@@ -119,12 +132,6 @@ def get_score(board_data):
 	
 	return 
 	# return an Integer
-def board_modification(data, move, mover):
-	# take in 83-long-string current board status "data", and index of destination (0-80) as "move"
-	# "mover" is 1 if 'X' and 2 if 'O'
-	# Return a new 83-long-string board status "new-board"
-	new_board = data[0:move] +  mover + data[move+1:]
-	return new_board
 
 def isBoardFull(squares):
 	for i in range(9):
