@@ -1,5 +1,5 @@
 from random import choice
-
+#
 class square:
 	def __init__(self,ID,val):
 		self.ID = ID
