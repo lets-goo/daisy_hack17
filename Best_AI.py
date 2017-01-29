@@ -42,15 +42,15 @@ class node:
 	
 class Tree:
 	def __init__(self):
-		root = None
+		self.root = None
 	
 	def insert_node(self, node, board_data, score):
-		if (root == None):
-			root = node(board_data, score)
+		if (self.root == None):
+			self.root = node(board_data, score)
 		else:
 			root.add_a_child(node(board_data, score))
 	
-	
+		return
 	
 	
 
@@ -125,26 +125,24 @@ def isSmallBoardWon(small_board_data):
 
 def miniMAX(node, maximizingPlayer):
 	# Return an integer
-	if node. or (isBoardWon != 0):
-		return get_score(node.board_data)
+	if node.isLeaf() or (isBoardWon != 0):
+		return get_score(node.get_board_data())
 	
 	if maximizingPlayer:
 		bestValue = -10000
-		for each child in node.children:
+		for child in node.get_children():
 			v = miniMax(child, False)
-			node.score = v
+			node.set_score(v)
 			bestValue = max(bestValue, v)
-		return bestValue
 		
 	else:
 		bestValue = 10000
-		for each child in node.children:
+		for child in node.get_children():
 			v = miniMax(child, True)
-			node.score = v
+			node.set_score(v)
 			bestValue = min(bestValue, v)
-		return bestValue
-		
-	return 
+	
+	return bestValue
 
 
 def get_score(board_data):
@@ -176,15 +174,19 @@ def getBigBoard(squares,bigSq):
 
 
 def get_move(timeout,data):
-	# Tree construction
-	
-	# 
+	#getting input
 	PLAYER=int(data[0])
 	nextsquare=int(data[1])
-	squares = []
-	for i in range(2,83): 
-		squares.append(square(i-2,int(data[i])))
-	validMoves=findValidMoves(squares,nextsquare)
+	
+	
+	# Tree construction
+	poss_moves = tree()
+	for i in range(5):
+		for i in range(9):
+			poss_moves.insert_node
+	
+	
+	
 	return choice(validMoves)
 	
 
