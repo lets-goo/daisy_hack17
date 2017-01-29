@@ -12,6 +12,7 @@ class square:
 	def _getsmallSq(self):
 		return self.ID%9
 		
+		
 class node:
 	def __init__(self, board_data, score):
 		self.board_data = board_data
@@ -22,8 +23,8 @@ class node:
 		return self.board_data
 	def get_score(self):
 		return self.score
-	def get_children(self):
-		return self.children
+	def get_children(self, index):
+		return self.children[index]
 	
 	def set_board_data(self, value):
 		self.board_data = value
@@ -32,7 +33,7 @@ class node:
 	def set_children(self, index, new_node):
 		if (index < len(self.children)):
 			self.children[index] = new_node
-	def add_a_child(self, new_node):
+	def add_a_child(self, new_node=None):
 		self.children.append(new_node)
 		
 	def isLeaf(self):
@@ -180,26 +181,26 @@ def initialize_tree(root, move, board_data, depth, depth_counter, mover):
 		return None
 	
 	#expand
+	depth_counter += 1
+	
 	for i in range(9):
 		#if valid move, insert node
-		if (board_data[move*9+i] == 0):
+		if (board_data[int(move)*9+i] == "0"):
 			#modify the board
-			new_board = board_modification(board_data, move*9+i, mover)
+			new_board = board_modification(board_data, int(move)*9+i, mover)
 			root.add_a_child( node(new_board, 0) )
 			
 			#expand further into its child
 			#switch player
-			if (mover == 1):
-				mover = 2
+			if (mover == "1"):
+				tmp_mover = "2"
 			else:
-				mover = 1
-				
-			depth_counter += 1
-			initialize_tree(root.get_children[i], i, new_board, depth, depth_counter, mover)
+				tmp_mover = "1"
+			initialize_tree(root.get_children(i), str(i), new_board, depth, depth_counter, tmp_mover)
 		
 		#null pointer
 		else:
-			node.add_a_child( None)
+			root.add_a_child( )
 	
 	return root
 	
